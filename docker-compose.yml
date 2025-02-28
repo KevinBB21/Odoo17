@@ -1,0 +1,46 @@
+services:
+  db:
+    container_name: postgres2
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=odoo
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  odoo:
+    container_name: odoo17b
+    image: odoo:17
+    depends_on:
+      - db
+    ports:
+      - "8088:8069"
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    volumes:
+      - odoo_data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - ./entrypoint.sh:/entrypoint.sh
+      - ./custom-addons:/mnt/extra-addons
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
+
+  pgadmin:
+    container_name: pgadmin2
+    image: dpage/pgadmin4
+    depends_on:
+      - db
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5051:5051"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  db_data:
+  odoo_data:
+  pgadmin_data:
