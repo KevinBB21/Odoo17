@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="biblioteca_ejemplar_action" model="ir.actions.act_window">
+        <field name="name">Lista de Ejemplares</field>
+        <field name="res_model">ejemplar.biblioteca</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="biblioteca_ejemplar_view_tree" model="ir.ui.view">
+        <field name="name">ejemplar.biblioteca.tree</field>
+        <field name="model">ejemplar.biblioteca</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" string="ID"/>
+                <field name="display_name" string="Ejemplar (Cómic + Estado)"/>
+                <field name="disponibilidad" string="Disponibilidad"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biblioteca_ejemplar_view_form" model="ir.ui.view">
+        <field name="name">ejemplar.biblioteca.form</field>
+        <field name="model">ejemplar.biblioteca</field>
+        <field name="arch" type="xml">
+            <form string="Ejemplar">
+                <sheet>
+                    <group>
+                        <field name="id" string="ID ejemplar" readonly="1"/>
+                        <field name="display_name" string="Ejemplar" readonly="1"/>
+                        <field name="comic_id" string="Cómic"/>
+                        <field name="estado_de_conservacion" string="Estado de Conservación"/>
+                        <field name="fecha_prestamo" string="Fecha de Préstamo"/>
+                        <field name="fecha_devolucion" string="Fecha Devolucion"/>
+                        <field name="usuario_id" string="Usuario"/>
+                    </group>
+                    <group>
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <field name="portada" widget="image" style="max-height: 250px; max-width: 250px; object-fit: contain; border: 1px solid #ddd; padding: 5px;" class="oe_portada"/>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem name="Ejemplares" id="biblioteca_ejemplar_menu" parent="biblioteca_base_menu" action="biblioteca_ejemplar_action"/>
+</odoo>
